@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading DISC — A Verandah Team Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#008C82;
+    --teal-deep:#03635c;
+    --teal-soft:#e4f1ef;
+    --gold:#D4AF50;
+    --gold-soft:#f7eed6;
+    --charcoal:#1A1A1A;
+    --paper:#fbf9f4;
+    --paper-card:#ffffff;
+    --line:#e6e1d6;
+    --ink-soft:#4a4a47;
+    --maxw:980px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--charcoal);
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    line-height:1.7;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.15;margin:0;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:var(--charcoal);
+    color:#fff;
+    padding:64px 0 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
+    background:linear-gradient(90deg,var(--teal) 0%,var(--teal) 55%,var(--gold) 55%,var(--gold) 100%);
+  }
+  .eyebrow{
+    font-family:'Jost',sans-serif;font-weight:500;
+    letter-spacing:.32em;text-transform:uppercase;font-size:12px;
+    color:var(--gold);margin-bottom:22px;
+  }
+  header.hero h1{
+    font-size:clamp(2.6rem,6vw,4.4rem);
+    font-weight:600;letter-spacing:-.5px;color:#fff;
+  }
+  header.hero h1 em{font-style:italic;color:var(--gold);}
+  header.hero .lede{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.25rem,2.6vw,1.7rem);
+    color:#d8d6cf;max-width:640px;margin-top:18px;line-height:1.4;
+  }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-label{
+    font-family:'Jost',sans-serif;font-weight:600;
+    letter-spacing:.28em;text-transform:uppercase;font-size:11.5px;
+    color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:12px;
+  }
+  .sec-label::before{content:"";width:26px;height:1.5px;background:var(--gold);display:inline-block;}
+  h2.sec-title{font-size:clamp(2rem,4vw,2.9rem);margin-bottom:18px;letter-spacing:-.3px;}
+  .prose{max-width:680px;}
+  .prose p{margin:0 0 16px;color:var(--ink-soft);}
+  .prose strong{color:var(--charcoal);font-weight:500;}
+  .prose p:last-child{margin-bottom:0;}
+
+  .callout{
+    background:var(--teal-soft);border-left:3px solid var(--teal);
+    padding:18px 22px;border-radius:0 8px 8px 0;margin-top:26px;max-width:680px;
+  }
+  .callout p{margin:0;color:var(--teal-deep);font-size:15.5px;}
+  .callout strong{color:var(--teal-deep);}
+
+  /* ---------- AXES / QUADRANT MAP (signature) ---------- */
+  .map-shell{margin-top:8px;}
+  .axis-top,.axis-bottom{
+    text-align:center;font-family:'Jost',sans-serif;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--ink-soft);
+  }
+  .axis-top{margin-bottom:10px;}
+  .axis-bottom{margin-top:10px;}
+  .map-row{display:flex;align-items:stretch;gap:14px;}
+  .axis-side{
+    display:flex;align-items:center;justify-content:center;width:34px;flex:0 0 34px;
+  }
+  .axis-side span{
+    writing-mode:vertical-rl;text-orientation:mixed;
+    font-family:'Jost',sans-serif;font-weight:600;letter-spacing:.18em;
+    text-transform:uppercase;font-size:11px;color:var(--ink-soft);
+  }
+  .axis-side.right span{transform:rotate(180deg);}
+  .quad-grid{
+    flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  }
+  .quad{
+    border-radius:12px;padding:24px 22px;color:#fff;position:relative;
+    min-height:178px;display:flex;flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .quad:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(26,26,26,.14);}
+  .quad .letter{
+    font-family:'Cormorant Garamond',serif;font-weight:700;
+    font-size:3.4rem;line-height:.9;
+  }
+  .quad .qname{
+    font-family:'Jost',sans-serif;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;font-size:12px;margin-top:4px;opacity:.92;
+  }
+  .quad .qdesc{font-size:14.5px;margin-top:12px;line-height:1.5;opacity:.95;}
+  .quad.d{background:var(--charcoal);}
+  .quad.d .letter{color:var(--gold);}
+  .quad.i{background:var(--gold);color:var(--charcoal);}
+  .quad.i .letter{color:#fff;}
+  .quad.s{background:var(--teal);}
+  .quad.s .letter{color:var(--gold);}
+  .quad.c{background:var(--teal-deep);}
+  .quad.c .letter{color:var(--gold);}
+
+  /* ---------- STYLE DETAIL CARDS ---------- */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px;}
+  .card{
+    background:var(--paper-card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 26px;border-top:4px solid var(--teal);
+  }
+  .card.d{border-top-color:var(--charcoal);}
+  .card.i{border-top-color:var(--gold);}
+  .card.s{border-top-color:var(--teal);}
+  .card.c{border-top-color:var(--teal-deep);}
+  .card-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;}
+  .card-head .big{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:2.4rem;line-height:1;}
+  .card.d .big{color:var(--charcoal);}
+  .card.i .big{color:var(--gold);}
+  .card.s .big{color:var(--teal);}
+  .card.c .big{color:var(--teal-deep);}
+  .card-head h3{font-size:1.7rem;}
+  .tag{
+    font-family:'Jost',sans-serif;font-weight:500;font-size:13px;color:var(--ink-soft);
+    font-style:italic;margin-bottom:18px;
+  }
+  .card h4{
+    font-family:'Jost',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--teal);margin:16px 0 7px;
+  }
+  .card h4.avoid{color:#a8543f;}
+  .card ul{margin:0;padding-left:18px;}
+  .card li{font-size:14.5px;color:var(--ink-soft);margin-bottom:5px;line-height:1.45;}
+
+  /* ---------- BLENDS ---------- */
+  .scale-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px;}
+  .scale-box{background:var(--paper-card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;}
+  .scale-box h4{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;margin-bottom:8px;}
+  .scale-box .hi{color:var(--teal);}
+  .scale-box .lo{color:var(--ink-soft);}
+  .scale-box p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+
+  .blend-list{margin-top:30px;display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .blend{display:grid;grid-template-columns:160px 1fr;gap:0;border-bottom:1px solid var(--line);}
+  .blend:last-child{border-bottom:none;}
+  .blend .b-name{
+    background:var(--teal-soft);padding:18px 20px;
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.3rem;color:var(--teal-deep);
+    display:flex;align-items:center;
+  }
+  .blend.flag .b-name{background:var(--gold-soft);color:#8a6d1f;}
+  .blend .b-body{padding:18px 22px;font-size:14.5px;color:var(--ink-soft);}
+  .blend .b-body strong{color:var(--charcoal);font-weight:500;}
+
+  /* ---------- HANDLING TABLE ---------- */
+  .table-scroll{overflow-x:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px;}
+  table{width:100%;border-collapse:collapse;min-width:640px;background:var(--paper-card);}
+  thead th{
+    background:var(--charcoal);color:#fff;text-align:left;padding:15px 18px;
+    font-family:'Jost',sans-serif;font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  }
+  tbody td{padding:16px 18px;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--ink-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td:first-child{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.25rem;color:var(--charcoal);width:115px;white-space:nowrap;
+  }
+  .pill{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:8px;vertical-align:middle;}
+  .pill.d{background:var(--charcoal);}
+  .pill.i{background:var(--gold);}
+  .pill.s{background:var(--teal);}
+  .pill.c{background:var(--teal-deep);}
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{background:var(--teal-soft);border-radius:16px;padding:38px 40px;margin-top:8px;}
+  .philosophy h3{font-size:1.9rem;color:var(--teal-deep);margin-bottom:14px;}
+  .philosophy ul{margin:0;padding-left:20px;}
+  .philosophy li{color:var(--teal-deep);margin-bottom:10px;font-size:15.5px;}
+  .philosophy li strong{font-weight:500;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--charcoal);color:#cfcdc6;padding:46px 0 40px;text-align:center;}
+  footer .mark{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.9rem;color:#fff;letter-spacing:.5px;}
+  footer .tag-a{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--gold);margin-top:8px;}
+  footer .tag-b{font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8f8d86;margin-top:14px;}
+  footer .rule{width:54px;height:2px;background:var(--gold);margin:0 auto 22px;}
+
+  /* ---------- LOAD ANIMATION ---------- */
+  .fade{opacity:0;transform:translateY(14px);animation:rise .7s ease forwards;}
+  .fade.d2{animation-delay:.12s;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:760px){
+    body{font-size:16px;}
+    .cards,.scale-row{grid-template-columns:1fr;}
+    .blend{grid-template-columns:1fr;}
+    .blend .b-name{border-bottom:1px solid var(--line);}
+    .quad{min-height:150px;}
+    .quad .letter{font-size:2.8rem;}
+    .axis-side{width:24px;flex-basis:24px;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+    .fade{opacity:1;transform:none;}
+  }
+  a:focus-visible,.quad:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap fade">
+    <div class="eyebrow">Verandah Properties · Internal Team Reference</div>
+    <h1>Reading <em>DISC</em></h1>
+    <p class="lede">A shared lens for understanding how each owner thinks, decides, and wants to be treated — so every client feels genuinely met.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">The short version</div>
+    <h2 class="sec-title">What DISC actually is</h2>
+    <div class="prose fade">
+      <p>DISC is a model for describing <strong>behavior and communication style</strong> — how a person naturally tends to act, decide, and relate to others. It is rooted in the work of psychologist William Moulton Marston and is used widely in business to help people work together with less friction.</p>
+      <p>It sorts behavioral tendencies into four styles: <strong>D</strong> (Dominance), <strong>I</strong> (Influence), <strong>S</strong> (Steadiness), and <strong>C</strong> (Conscientiousness). Everyone is a blend of all four — most people simply lead with one or two.</p>
+      <p>A few things DISC is <strong>not</strong>: it is not intelligence, not a measure of how "good" someone is, and not a permanent box. It describes <em>preferences</em>, and people flex depending on the situation. We use it for one reason only — to serve people the way they actually want to be served.</p>
+    </div>
+    <div class="callout fade">
+      <p><strong>Why it matters here:</strong> the same message — a price reduction, a maintenance call, a lease question — lands completely differently depending on who's receiving it. DISC tells us how to <em>frame</em> the message so the owner trusts us and feels at ease.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">How it works</div>
+    <h2 class="sec-title">Two questions, four styles</h2>
+    <div class="prose fade">
+      <p>The whole model comes down to two questions about how a person operates. First — <strong>what's their pace?</strong> Fast and outspoken, or measured and reflective. Second — <strong>what's their focus?</strong> The task and the logic, or the people and the relationship.</p>
+      <p>Cross those two and you get the four styles. Find where someone sits on the map and you already know a lot about how to approach them.</p>
+    </div>
+
+    <div class="map-shell fade d2">
+      <div class="axis-top">▲ &nbsp;Faster · more outspoken</div>
+      <div class="map-row">
+        <div class="axis-side left"><span>◀ Task &amp; logic focused</span></div>
+        <div class="quad-grid">
+          <div class="quad d" tabindex="0">
+            <span class="letter">D</span>
+            <span class="qname">Dominance</span>
+            <span class="qdesc">Fast + task. Direct, decisive, results-driven. Wants the bottom line.</span>
+          </div>
+          <div class="quad i" tabindex="0">
+            <span class="letter">I</span>
+            <span class="qname">Influence</span>
+            <span class="qdesc">Fast + people. Warm, expressive, optimistic. Wants connection.</span>
+          </div>
+          <div class="quad c" tabindex="0">
+            <span class="letter">C</span>
+            <span class="qname">Conscientiousness</span>
+            <span class="qdesc">Measured + task. Precise, analytical, careful. Wants accuracy.</span>
+          </div>
+          <div class="quad s" tabindex="0">
+            <span class="letter">S</span>
+            <span class="qname">Steadiness</span>
+            <span class="qdesc">Measured + people. Patient, loyal, calm. Wants security.</span>
+          </div>
+        </div>
+        <div class="axis-side right"><span>People &amp; relationship focused ▶</span></div>
+      </div>
+      <div class="axis-bottom">▼ &nbsp;Slower · more reflective</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">The four styles up close</div>
+    <h2 class="sec-title">What each one values — and how to serve them</h2>
+    <div class="cards">
+
+      <div class="card d fade">
+        <div class="card-head"><span class="big">D</span><h3>Dominance</h3></div>
+        <div class="tag">"Just give me the bottom line."</div>
+        <h4>You'll recognize them by</h4>
+        <ul>
+          <li>Fast decisions, short emails, little small talk</li>
+          <li>Focus on outcomes, control, and ROI</li>
+          <li>Can come across as blunt or impatient</li>
+        </ul>
+        <h4>How to serve them</h4>
+        <ul>
+          <li>Be brief and lead with the result</li>
+          <li>Offer clear options, then let them decide</li>
+          <li>Respect their time — every interaction has a point</li>
+        </ul>
+        <h4 class="avoid">Avoid</h4>
+        <ul>
+          <li>Rambling, over-explaining, or seeming indecisive</li>
+        </ul>
+      </div>
+
+      <div class="card i fade">
+        <div class="card-head"><span class="big">I</span><h3>Influence</h3></div>
+        <div class="tag">"Let's talk it through — I trust you."</div>
+        <h4>You'll recognize them by</h4>
+        <ul>
+          <li>Friendly, chatty, enthusiastic, optimistic</li>
+          <li>Relationship comes before the fine print</li>
+          <li>May skim details or forget specifics</li>
+        </ul>
+        <h4>How to serve them</h4>
+        <ul>
+          <li>Be warm and personable; let them talk</li>
+          <li>Show genuine enthusiasm for their goals</li>
+          <li>Always confirm key details <em>in writing</em></li>
+        </ul>
+        <h4 class="avoid">Avoid</h4>
+        <ul>
+          <li>Being cold or all-business; burying them in verbal fine print</li>
+        </ul>
+      </div>
+
+      <div class="card s fade">
+        <div class="card-head"><span class="big">S</span><h3>Steadiness</h3></div>
+        <div class="tag">"Walk me through it — I don't love surprises."</div>
+        <h4>You'll recognize them by</h4>
+        <ul>
+          <li>Calm, patient, polite, loyal</li>
+          <li>Values consistency and harmony; dislikes change</li>
+          <li>Slow to decide; may not voice concerns</li>
+        </ul>
+        <h4>How to serve them</h4>
+        <ul>
+          <li>Be patient, warm, and sincere</li>
+          <li>Give reassurance and clear, predictable next steps</li>
+          <li>Prepare them gently before any change</li>
+        </ul>
+        <h4 class="avoid">Avoid</h4>
+        <ul>
+          <li>Rushing, pressuring, or springing surprises on them</li>
+        </ul>
+      </div>
+
+      <div class="card c fade">
+        <div class="card-head"><span class="big">C</span><h3>Conscientiousness</h3></div>
+        <div class="tag">"Show me the details and the data."</div>
+        <h4>You'll recognize them by</h4>
+        <ul>
+          <li>Analytical, precise, careful with facts</li>
+          <li>Asks detailed questions; wants documentation</li>
+          <li>Skeptical of vague or emotional answers</li>
+        </ul>
+        <h4>How to serve them</h4>
+        <ul>
+          <li>Come prepared with specifics, data, and documents</li>
+          <li>Be accurate and exact — say "I'll confirm" over guessing</li>
+          <li>Give them time to review before deciding</li>
+        </ul>
+        <h4 class="avoid">Avoid</h4>
+        <ul>
+          <li>Winging it, being vague, or getting overly gushy</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">The part everyone asks about</div>
+    <h2 class="sec-title">"High C, low S" — reading the blends</h2>
+    <div class="prose fade">
+      <p>Here's the key: a DISC profile scores a person on <strong>all four</strong> styles at once. So you'll often hear a blend like "high C, low S." That's just describing two of those four scores.</p>
+      <p><strong>"High"</strong> means the trait is strong and shows up often. <strong>"Low"</strong> means it's not a real driver for them. Reading a blend is just stacking those together.</p>
+    </div>
+
+    <div class="scale-row fade d2">
+      <div class="scale-box">
+        <h4><span class="hi">High</span> = a strong driver</h4>
+        <p>This trait shows up clearly and often. "High C" means precision and accuracy genuinely matter to this person — expect detailed questions.</p>
+      </div>
+      <div class="scale-box">
+        <h4><span class="lo">Low</span> = not a driver</h4>
+        <p>This trait isn't pulling much weight. "Low S" means they're <em>not</em> especially change-averse or slow — they'll move once they're satisfied.</p>
+      </div>
+    </div>
+
+    <div class="prose fade" style="margin-top:30px;">
+      <p>Put those two together and <strong>"high C, low S"</strong> reads as: a precise, detail-driven owner who wants the facts and the documentation — but who, once satisfied, is comfortable moving and deciding without a lot of hand-holding. Compare that to its near-opposite below.</p>
+    </div>
+
+    <div class="blend-list fade">
+      <div class="blend flag">
+        <div class="b-name">High C / High S</div>
+        <div class="b-body"><strong>The careful, cautious owner.</strong> Wants every detail <em>and</em> plenty of reassurance and time. Slow to decide, risk-averse, thorough. Give them data, patience, and predictable steps — never a rush. <em>(This is a common, high-touch profile worth recognizing early.)</em></div>
+      </div>
+      <div class="blend">
+        <div class="b-name">High C / Low S</div>
+        <div class="b-body"><strong>The decisive analyst.</strong> Just as detail-driven, but quicker to act once the facts check out. Give them the documentation, then let them move. Less hand-holding needed.</div>
+      </div>
+      <div class="blend">
+        <div class="b-name">High D / High I</div>
+        <div class="b-body"><strong>The bold connector.</strong> Fast, confident, and personable. Wants results <em>and</em> a relationship. Be warm but efficient — energy plus a clear bottom line.</div>
+      </div>
+      <div class="blend">
+        <div class="b-name">High D / Low I</div>
+        <div class="b-body"><strong>The all-business driver.</strong> Blunt and outcome-focused with little need for warmth or chit-chat. Keep it short, factual, and to the point.</div>
+      </div>
+      <div class="blend">
+        <div class="b-name">High S / High I</div>
+        <div class="b-body"><strong>The friendly relationship-builder.</strong> Warm, agreeable, and conflict-averse. Lead with connection and reassurance; be gentle delivering anything difficult.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">In practice at Verandah</div>
+    <h2 class="sec-title">When Pamela relays a profile</h2>
+    <div class="prose fade">
+      <p>When Pamela hands a client off, she'll often note the owner's style — "this one's a high-C," or "high C, low S." That's your cue to set the tone before you ever pick up the phone or open a draft. Quick reference:</p>
+    </div>
+    <div class="table-scroll fade">
+      <table>
+        <thead>
+          <tr><th>Style</th><th>What they value</th><th>How we handle them</th><th>What to avoid</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill d"></span>High D</td>
+            <td>Results, control, speed</td>
+            <td>Be concise, lead with the outcome, give options and let them choose</td>
+            <td>Long preambles; seeming unsure</td>
+          </tr>
+          <tr>
+            <td><span class="pill i"></span>High I</td>
+            <td>Connection, recognition, energy</td>
+            <td>Be warm and personable; follow every conversation with a written recap</td>
+            <td>Cold tone; verbal-only details they'll forget</td>
+          </tr>
+          <tr>
+            <td><span class="pill s"></span>High S</td>
+            <td>Security, consistency, being heard</td>
+            <td>Be patient and reassuring; lay out clear, predictable steps</td>
+            <td>Rushing; surprises; pressure</td>
+          </tr>
+          <tr>
+            <td><span class="pill c"></span>High C</td>
+            <td>Accuracy, quality, logic</td>
+            <td>Bring specifics and documentation; be precise; confirm rather than guess</td>
+            <td>Vagueness; winging it; over-emoting</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-label">Hold it lightly</div>
+    <h2 class="sec-title">A tool, not a label</h2>
+    <div class="philosophy fade">
+      <h3>How we use DISC well</h3>
+      <ul>
+        <li><strong>It's a starting read, not a verdict.</strong> Use it to set your approach, then adjust to the actual person in front of you.</li>
+        <li><strong>People flex.</strong> The same owner may be high-D at work and high-S about their property. Watch how they respond and meet them there.</li>
+        <li><strong>Never use it to box someone in.</strong> No style is better or worse — each just needs something different from us.</li>
+        <li><strong>Pair it with real listening.</strong> DISC sharpens our instincts; it never replaces genuinely paying attention.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="rule"></div>
+    <div class="mark">VERANDAH</div>
+    <div class="tag-a">Curating Lake Nona's Finest Rental Portfolio</div>
+    <div class="tag-b">The marriage, not the sprint</div>
+  </div>
+</footer>
+
+</body>
+</html>
